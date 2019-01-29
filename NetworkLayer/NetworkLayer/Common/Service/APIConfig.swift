@@ -11,11 +11,10 @@ import Foundation
 public class APIConfig {
     public static var requestTimeOut: TimeInterval = 60
     public static var productionBaseURL = "http://api.globedr.com/api/v1"
-    public static var apiRouterBaseURL  = "http://api-test.globedr.com/api/v1/"
     public static var apiTestV1BaseURL  = "http://api-test.globedr.com/api/v1/"
     public static var tokenHeader       = ["Authorization": ""]
-    public static var enviroment        = NetworkEnviroment.production
     public static var defaultNullValue  = "null"
+    public static var enviroment        = NetworkEnviroment.production
 }
 
 

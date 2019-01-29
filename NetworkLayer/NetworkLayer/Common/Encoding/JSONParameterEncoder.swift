@@ -16,9 +16,7 @@ public struct JSONParameterEncoder: ParameterEncoder {
             if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
-        } catch let error {
-            let x = error.localizedDescription
-            print(x)
+        } catch {
             throw NetworkError.encodingFailed
         }
     }

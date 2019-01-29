@@ -10,7 +10,7 @@ import UIKit
 
 public enum NetworkEnviroment {
     case production
-    case APITestV1
+    case test
 }
 
 public typealias HTTPHeaders = [String: String]
@@ -30,8 +30,10 @@ extension EndPointType {
     var enviromentBaseURL: String {
         get {
             switch APIConfig.enviroment {
-            case .production:               return APIConfig.productionBaseURL
-            case .APITestV1:                return APIConfig.apiTestV1BaseURL
+            case .production:
+                return APIConfig.productionBaseURL
+            case .test:
+                return APIConfig.apiTestV1BaseURL
             }
         }
     }

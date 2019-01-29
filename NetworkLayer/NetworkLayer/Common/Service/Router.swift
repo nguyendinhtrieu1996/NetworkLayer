@@ -12,16 +12,29 @@ protocol NetworkRouter: class {
     associatedtype ResponseError : Decodable
     associatedtype ResponseData  : Decodable
     associatedtype EndPoint: EndPointType
+    associatedtype CompletionHanle = (APIResponse<ResponseData, ResponseError>) -> Void
     
-    func request(_ route: EndPoint, _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void, _ onError: (()->Void)?, _ onNoNetwork: (()->Void)?)
+    func request(_ route: EndPoint,
+                 _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
+                 _ onError: (()->Void)?,
+                 _ onNoNetwork: (()->Void)?)
+    
     func cancel()
+    
 }
 
 class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Decodable>: NetworkRouter {
     private var task: URLSessionTask?
+    private var session: URLSession
     
-    func request(_ route: EndPoint, _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void, _ onError: (()->Void)?, _ onNoNetwork: (()->Void)?) {
-        let session = URLSession.shared
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+    }
+    
+    func request(_ route: EndPoint,
+                 _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void,
+                 _ onError: (()->Void)?,
+                 _ onNoNetwork: (()->Void)?) {
         do {
             let request = try self.buildRequest(from: route)
             NetworkLogger.log(request: request)

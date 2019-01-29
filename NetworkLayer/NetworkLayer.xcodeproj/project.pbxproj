@@ -20,7 +20,6 @@
 		C50A3E722200324B008CFFB4 /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E6D2200324B008CFFB4 /* EndPointType.swift */; };
 		C50A3E7B2200325D008CFFB4 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E782200325C008CFFB4 /* NetworkResponse.swift */; };
 		C50A3E7C2200325D008CFFB4 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E792200325C008CFFB4 /* Result.swift */; };
-		C50A3E7D2200325D008CFFB4 /* Transfrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E7A2200325C008CFFB4 /* Transfrom.swift */; };
 		C50A3E832200326B008CFFB4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E7F2200326B008CFFB4 /* Router.swift */; };
 		C50A3E842200326B008CFFB4 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E802200326B008CFFB4 /* APIConfig.swift */; };
 		C50A3E852200326B008CFFB4 /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E812200326B008CFFB4 /* NetworkLogger.swift */; };
@@ -65,7 +64,6 @@
 		C50A3E6D2200324B008CFFB4 /* EndPointType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
 		C50A3E782200325C008CFFB4 /* NetworkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		C50A3E792200325C008CFFB4 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		C50A3E7A2200325C008CFFB4 /* Transfrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfrom.swift; sourceTree = "<group>"; };
 		C50A3E7F2200326B008CFFB4 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C50A3E802200326B008CFFB4 /* APIConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
 		C50A3E812200326B008CFFB4 /* NetworkLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 			children = (
 				C50A3E782200325C008CFFB4 /* NetworkResponse.swift */,
 				C50A3E792200325C008CFFB4 /* Result.swift */,
-				C50A3E7A2200325C008CFFB4 /* Transfrom.swift */,
 				C50A3E882200333D008CFFB4 /* APIResponseModel.swift */,
 			);
 			path = Manager;
@@ -335,7 +332,6 @@
 				C50A3E1F22003118008CFFB4 /* ViewController.swift in Sources */,
 				C50A3E1D22003118008CFFB4 /* AppDelegate.swift in Sources */,
 				C50A3E7C2200325D008CFFB4 /* Result.swift in Sources */,
-				C50A3E7D2200325D008CFFB4 /* Transfrom.swift in Sources */,
 				C50A3E852200326B008CFFB4 /* NetworkLogger.swift in Sources */,
 				C50A3E722200324B008CFFB4 /* EndPointType.swift in Sources */,
 				C50A3E6A2200323C008CFFB4 /* ParameterEncoding.swift in Sources */,

@@ -10,7 +10,6 @@ import Foundation
 
 class NetworkLogger {
     static func log(request: URLRequest) {
-        
         print("\n - - - - - - - - - - OUTGOING - - - - - - - - - - \n")
         defer { print("\n - - - - - - - - - -  END - - - - - - - - - - \n") }
         
@@ -41,12 +40,12 @@ class NetworkLogger {
     
     static func log(title: String = "", data: Data?, response: HTTPURLResponse) {
         print("\n - - - - - - - - \(title) OUTGOING RESPONSE - - - - - - - - \n")
+        defer { print("\n - - - - - - - - - -  END - - - - - - - - - - \n") }
+        
         let code = response.statusCode
         let jsonData = try? JSONSerialization.jsonObject(with: data ?? Data(), options: []) as? [String: Any] ?? [:]
         print("Status Code = \(code) \n\n Response = \n \(String(describing: jsonData))")
-        defer { print("\n - - - - - - - - - -  END - - - - - - - - - - \n") }
     }
-    
 }
 
 
