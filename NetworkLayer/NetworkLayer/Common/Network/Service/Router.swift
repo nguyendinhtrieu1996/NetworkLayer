@@ -36,7 +36,7 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
                  _ onError: (()->Void)?,
                  _ onNoNetwork: (()->Void)?) {
         do {
-            let request = try self.buildRequest(from: route)
+            let request = try buildRequest(from: route)
             NetworkLogger.log(request: request)
             task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 guard error == nil else {
@@ -91,18 +91,17 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
     }
     
     
-    fileprivate func buildRequest(from route: EndPoint) throws -> URLRequest {
-
-        var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path),
+    fileprivate func buildRequest(from endPoint: EndPoint) throws -> URLRequest {
+        var request = URLRequest(url: endPoint.baseURL.appendingPathComponent(endPoint.path),
                                  cachePolicy: .reloadIgnoringLocalCacheData,
                                  timeoutInterval: APIConfig.requestTimeOut)
         
-        request.httpMethod = route.httpMethod.rawValue
+        request.httpMethod = endPoint.httpMethod.rawValue
         
         do {
-            addAdditionalHeaders(route.headers, request: &request)
+            addAdditionalHeaders(endPoint.headers, request: &request)
             
-            try configureParameters(bodyParameters: route.body, urlParameters: route.urlParams, request: &request)
+            try configureParameters(bodyParameters: endPoint.body, urlParameters: endPoint.urlParams, request: &request)
             
             return request
         } catch {

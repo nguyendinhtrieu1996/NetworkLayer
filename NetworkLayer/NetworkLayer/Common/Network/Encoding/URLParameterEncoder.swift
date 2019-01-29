@@ -33,11 +33,9 @@ public struct URLParameterEncoder: ParameterEncoder {
     }
     
     public func encodeHTTPBody(urlRequest: inout URLRequest, with parameters: Parameters) throws {
-        
         let query = parameters.map { "\($0)=\($1 ?? APIConfig.defaultNullValue)" }.joined(separator: "&")
         
         urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        
         urlRequest.httpBody = query.data(using: .utf8, allowLossyConversion: false)
         
         if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {

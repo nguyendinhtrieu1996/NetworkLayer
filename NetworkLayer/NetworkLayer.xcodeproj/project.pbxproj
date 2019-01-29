@@ -151,10 +151,7 @@
 		C50A3E4A2200316C008CFFB4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				C50A3E7E22003262008CFFB4 /* Service */,
-				C50A3E7722003252008CFFB4 /* Manager */,
-				C50A3E6C22003241008CFFB4 /* EndPoint */,
-				C50A3E65220031C1008CFFB4 /* Encoding */,
+				C50A3E8A22003D14008CFFB4 /* Network */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -182,6 +179,7 @@
 			children = (
 				C50A3E782200325C008CFFB4 /* NetworkResponse.swift */,
 				C50A3E792200325C008CFFB4 /* Result.swift */,
+				C50A3E802200326B008CFFB4 /* APIConfig.swift */,
 				C50A3E882200333D008CFFB4 /* APIResponseModel.swift */,
 			);
 			path = Manager;
@@ -193,9 +191,19 @@
 				C50A3E822200326B008CFFB4 /* HTTPMethod.swift */,
 				C50A3E812200326B008CFFB4 /* NetworkLogger.swift */,
 				C50A3E7F2200326B008CFFB4 /* Router.swift */,
-				C50A3E802200326B008CFFB4 /* APIConfig.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		C50A3E8A22003D14008CFFB4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C50A3E7E22003262008CFFB4 /* Service */,
+				C50A3E7722003252008CFFB4 /* Manager */,
+				C50A3E6C22003241008CFFB4 /* EndPoint */,
+				C50A3E65220031C1008CFFB4 /* Encoding */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
