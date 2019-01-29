@@ -8,11 +8,6 @@
 
 import UIKit
 
-public enum NetworkEnviroment {
-    case production
-    case test
-}
-
 public typealias HTTPHeaders = [String: String]
 
 protocol EndPointType {
@@ -30,9 +25,9 @@ extension EndPointType {
     var enviromentBaseURL: String {
         switch APIConfig.enviroment {
         case .production:
-            return APIConfig.productionBaseURL
+            return APIConfig.getProductionBaseURLString()
         case .test:
-            return APIConfig.apiTestV1BaseURL
+            return APIConfig.geTestBaseURLString()
         }
     }
     

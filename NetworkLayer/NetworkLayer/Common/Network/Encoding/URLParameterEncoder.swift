@@ -9,7 +9,7 @@
 import Foundation
 
 public struct URLParameterEncoder: ParameterEncoder {
-    public func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {
+    public static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {
         
         guard let url = urlRequest.url else { throw NetworkError.missingURL }
         
@@ -32,7 +32,7 @@ public struct URLParameterEncoder: ParameterEncoder {
         
     }
     
-    public func encodeHTTPBody(urlRequest: inout URLRequest, with parameters: Parameters) throws {
+    public static func encodeHTTPBody(urlRequest: inout URLRequest, with parameters: Parameters) throws {
         let query = parameters.map { "\($0)=\($1 ?? APIConfig.defaultNullValue)" }.joined(separator: "&")
         
         urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")

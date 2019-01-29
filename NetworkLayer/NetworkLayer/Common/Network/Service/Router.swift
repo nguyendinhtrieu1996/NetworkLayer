@@ -93,7 +93,7 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
     
     fileprivate func buildRequest(from endPoint: EndPoint) throws -> URLRequest {
         var request = URLRequest(url: endPoint.baseURL.appendingPathComponent(endPoint.path),
-                                 cachePolicy: .reloadIgnoringLocalCacheData,
+                                 cachePolicy: endPoint.cachePolicy,
                                  timeoutInterval: APIConfig.requestTimeOut)
         
         request.httpMethod = endPoint.httpMethod.rawValue
@@ -101,19 +101,11 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         do {
             addAdditionalHeaders(endPoint.headers, request: &request)
             
-            try configureParameters(bodyParameters: endPoint.body, urlParameters: endPoint.urlParams, request: &request)
+            try configureParameters(bodyParameters: endPoint.body,
+                                    urlParameters: endPoint.urlParams,
+                                    request: &request)
             
             return request
-        } catch {
-            throw error
-        }
-    }
-    
-    fileprivate func configureParameters(bodyParameters: Parameters?,
-                                         urlParameters: Parameters?,
-                                         request: inout URLRequest) throws {
-        do {
-            try ParameterEncoding.encode(urlRequest: &request, bodyParameters: bodyParameters, urlParameters: urlParameters)
         } catch {
             throw error
         }
@@ -123,6 +115,18 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         guard let headers = addtionalHeaders else { return }
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
+        }
+    }
+    
+    fileprivate func configureParameters(bodyParameters: Parameters?,
+                                         urlParameters: Parameters?,
+                                         request: inout URLRequest) throws {
+        do {
+            try ParameterEncoding.encode(urlRequest: &request,
+                                         bodyParameters: bodyParameters,
+                                         urlParameters: urlParameters)
+        } catch {
+            throw error
         }
     }
     

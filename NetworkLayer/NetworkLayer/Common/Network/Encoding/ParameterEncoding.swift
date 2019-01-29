@@ -11,7 +11,7 @@ import UIKit
 public typealias Parameters = [String: Any?]
 
 public protocol ParameterEncoder {
-    func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws
+    static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws
 }
 
 public enum ParameterEncoding {
@@ -20,11 +20,11 @@ public enum ParameterEncoding {
                               urlParameters: Parameters?) throws {
         do {
             if let urlParameters = urlParameters {
-                try URLParameterEncoder().encode(urlRequest: &urlRequest, with: urlParameters)
+                try URLParameterEncoder.encode(urlRequest: &urlRequest, with: urlParameters)
             }
             
             if let bodyParameters = bodyParameters {
-                try JSONParameterEncoder().encode(urlRequest: &urlRequest, with: bodyParameters)
+                try JSONParameterEncoder.encode(urlRequest: &urlRequest, with: bodyParameters)
             }
         } catch {
             throw error

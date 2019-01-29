@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum Result<String> {
+    case success
+    case failure(String)
+}
+
 class APIResponse<DataResponse: Decodable, ErrorResponse: Decodable>: Decodable  {
     private enum ResponseKeys: String, CodingKey {
         case isSuccess  = "success"
