@@ -9,13 +9,12 @@
 import Foundation
 
 protocol NetworkRouter: class {
-    associatedtype ResponseError : Decodable
     associatedtype ResponseData  : Decodable
     associatedtype EndPoint: EndPointType
-    associatedtype CompletionHanle = (APIResponse<ResponseData, ResponseError>) -> Void
+    associatedtype CompletionHanler = (APIResponse<ResponseData>) -> Void
     
     func request(endPoint: EndPoint,
-                 onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
+                 onSuccess: CompletionHanler,
                  onError: (()->Void)?)
     
     func cancel()
@@ -30,9 +29,7 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         self.session = session
     }
     
-    func request(endPoint: EndPoint,
-                 onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void,
-                 onError: (()->Void)?) {
+    func request(endPoint: EndPoint, onSuccess: @escaping CompletionHanler, onError: (()->Void)?) {
         do {
             let request = try buildRequest(from: endPoint)
             NetworkLogger.log(request: request)
@@ -62,10 +59,12 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
     
     fileprivate func mapData(data: Data?,
                              response: URLResponse?,
-                             onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
+                             onSuccess: @escaping (APIResponse<ResponseData>) -> Void,
                              onError: (()->Void)?) {
         guard let response = response as? HTTPURLResponse else {
-            onError?()
+            DispatchQueue.main.async {
+                onError?()
+            }
             return
         }
         NetworkLogger.log(data: data, response: response)
@@ -74,24 +73,30 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         switch result {
         case .success:
             guard let apiResponse = parseJSON(data: data) else {
-                onError?()
+                DispatchQueue.main.async {
+                    onError?()
+                }
                 return
             }
-            onSuccess(apiResponse)
+            DispatchQueue.main.async {
+                onSuccess(apiResponse)
+            }
             break
         case .failure:
-            onError?()
+            DispatchQueue.main.async {
+                onError?()
+            }
             break
         }
     }
     
-    fileprivate func parseJSON(data: Data?) -> APIResponse<ResponseData, ResponseError>? {
+    fileprivate func parseJSON(data: Data?) -> APIResponse<ResponseData>? {
         guard let responseData = data else {
             return nil
         }
         
         do {
-            let response = try JSONDecoder().decode(APIResponse<ResponseData, ResponseError>.self, from: responseData)
+            let response = try JSONDecoder().decode(APIResponse<ResponseData>.self, from: responseData)
             return response
         } catch {
             return nil
