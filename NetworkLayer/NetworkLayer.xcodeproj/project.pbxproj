@@ -26,10 +26,6 @@
 		C50A3E892200333D008CFFB4 /* APIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E882200333D008CFFB4 /* APIResponseModel.swift */; };
 		C50A3E8C22003EB8008CFFB4 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E8B22003EB8008CFFB4 /* AppConfig.swift */; };
 		C50A3E91220043D0008CFFB4 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E90220043D0008CFFB4 /* UserDefaultManager.swift */; };
-		C50A3E9322004514008CFFB4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E9222004514008CFFB4 /* NetworkManager.swift */; };
-		C50A3E9922004667008CFFB4 /* HomeAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E9822004667008CFFB4 /* HomeAPIManager.swift */; };
-		C50A3E9B22004676008CFFB4 /* AuthAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E9A22004676008CFFB4 /* AuthAPIManager.swift */; };
-		C50A3E9D22004681008CFFB4 /* OrderAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50A3E9C22004681008CFFB4 /* OrderAPIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,10 +71,6 @@
 		C50A3E882200333D008CFFB4 /* APIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseModel.swift; sourceTree = "<group>"; };
 		C50A3E8B22003EB8008CFFB4 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		C50A3E90220043D0008CFFB4 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
-		C50A3E9222004514008CFFB4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		C50A3E9822004667008CFFB4 /* HomeAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIManager.swift; sourceTree = "<group>"; };
-		C50A3E9A22004676008CFFB4 /* AuthAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPIManager.swift; sourceTree = "<group>"; };
-		C50A3E9C22004681008CFFB4 /* OrderAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAPIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,10 +182,6 @@
 				C50A3E782200325C008CFFB4 /* NetworkResponse.swift */,
 				C50A3E802200326B008CFFB4 /* APIConfig.swift */,
 				C50A3E882200333D008CFFB4 /* APIResponseModel.swift */,
-				C50A3E9222004514008CFFB4 /* NetworkManager.swift */,
-				C50A3E9822004667008CFFB4 /* HomeAPIManager.swift */,
-				C50A3E9A22004676008CFFB4 /* AuthAPIManager.swift */,
-				C50A3E9C22004681008CFFB4 /* OrderAPIManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -376,9 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C50A3E9B22004676008CFFB4 /* AuthAPIManager.swift in Sources */,
 				C50A3E1F22003118008CFFB4 /* ViewController.swift in Sources */,
-				C50A3E9322004514008CFFB4 /* NetworkManager.swift in Sources */,
 				C50A3E1D22003118008CFFB4 /* AppDelegate.swift in Sources */,
 				C50A3E8C22003EB8008CFFB4 /* AppConfig.swift in Sources */,
 				C50A3E852200326B008CFFB4 /* NetworkLogger.swift in Sources */,
@@ -390,10 +376,8 @@
 				C50A3E892200333D008CFFB4 /* APIResponseModel.swift in Sources */,
 				C50A3E7B2200325D008CFFB4 /* NetworkResponse.swift in Sources */,
 				C50A3E6B2200323C008CFFB4 /* URLParameterEncoder.swift in Sources */,
-				C50A3E9922004667008CFFB4 /* HomeAPIManager.swift in Sources */,
 				C50A3E692200323C008CFFB4 /* JSONParameterEncoder.swift in Sources */,
 				C50A3E842200326B008CFFB4 /* APIConfig.swift in Sources */,
-				C50A3E9D22004681008CFFB4 /* OrderAPIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

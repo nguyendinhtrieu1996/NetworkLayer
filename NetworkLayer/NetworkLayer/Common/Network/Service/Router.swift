@@ -14,10 +14,9 @@ protocol NetworkRouter: class {
     associatedtype EndPoint: EndPointType
     associatedtype CompletionHanle = (APIResponse<ResponseData, ResponseError>) -> Void
     
-    func request(_ route: EndPoint,
-                 _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
-                 _ onError: (()->Void)?,
-                 _ onNoNetwork: (()->Void)?)
+    func request(endPoint: EndPoint,
+                 onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
+                 onError: (()->Void)?)
     
     func cancel()
     
@@ -31,41 +30,25 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         self.session = session
     }
     
-    func request(_ route: EndPoint,
-                 _ onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void,
-                 _ onError: (()->Void)?,
-                 _ onNoNetwork: (()->Void)?) {
+    func request(endPoint: EndPoint,
+                 onSuccess: @escaping (APIResponse<ResponseData, ResponseError>)->Void,
+                 onError: (()->Void)?) {
         do {
-            let request = try buildRequest(from: route)
+            let request = try buildRequest(from: endPoint)
             NetworkLogger.log(request: request)
-            task = session.dataTask(with: request, completionHandler: { (data, response, error) in
-                guard error == nil else {
-                    DispatchQueue.main.async { onNoNetwork?() }
+            
+            task = session.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+                guard let strongSelf = self, error == nil else {
+                    DispatchQueue.main.async {
+                        onError?()
+                    }
                     return
                 }
                 
-                if let response = response as? HTTPURLResponse {
-                    NetworkLogger.log(data: data, response: response)
-                    let result = Router<EndPoint, ResponseData, ResponseError>.handleNetworkResponse(response)
-                    
-                    switch result {
-                    case .success:
-                        guard let apiResponse = Router<EndPoint, ResponseData, ResponseError>.parseJSON(data: data) else {
-                            DispatchQueue.main.async { onError?() }
-                            return
-                        }
-                        DispatchQueue.main.async { onSuccess(apiResponse) }
-                        break
-                    case .failure:
-                        DispatchQueue.main.async { onError?() }
-                        break
-                    }
-                } else {
-                    DispatchQueue.main.async { onError?() }
-                }
+                strongSelf.mapData(data: data, response: response, onSuccess: onSuccess, onError: onError)
             })
             
-            self.task?.resume()
+            task?.resume()
         } catch {
             DispatchQueue.main.async {
                 onError?()
@@ -77,19 +60,43 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         self.task?.cancel()
     }
     
-    public static func parseJSON(data: Data?) -> APIResponse<ResponseData, ResponseError>? {
-        guard let responseData = data else { return nil }
+    fileprivate func mapData(data: Data?,
+                             response: URLResponse?,
+                             onSuccess: @escaping (APIResponse<ResponseData, ResponseError>) -> Void,
+                             onError: (()->Void)?) {
+        guard let response = response as? HTTPURLResponse else {
+            onError?()
+            return
+        }
+        NetworkLogger.log(data: data, response: response)
+        let result = handleNetworkResponse(response)
+        
+        switch result {
+        case .success:
+            guard let apiResponse = parseJSON(data: data) else {
+                onError?()
+                return
+            }
+            onSuccess(apiResponse)
+            break
+        case .failure:
+            onError?()
+            break
+        }
+    }
+    
+    fileprivate func parseJSON(data: Data?) -> APIResponse<ResponseData, ResponseError>? {
+        guard let responseData = data else {
+            return nil
+        }
         
         do {
             let response = try JSONDecoder().decode(APIResponse<ResponseData, ResponseError>.self, from: responseData)
             return response
-            
         } catch {
-            print(error.localizedDescription)
             return nil
         }
     }
-    
     
     fileprivate func buildRequest(from endPoint: EndPoint) throws -> URLRequest {
         var request = URLRequest(url: endPoint.baseURL.appendingPathComponent(endPoint.path),
@@ -130,7 +137,7 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
         }
     }
     
-    fileprivate static func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<String> {
+    fileprivate func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<String> {
         switch response.statusCode {
         case 200...299:
             return .success
@@ -146,7 +153,6 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Dec
             return .failure(NetworkResponse.failed.rawValue)
         }
     }
-    
     
 }
 
