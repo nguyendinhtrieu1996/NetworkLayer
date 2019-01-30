@@ -22,7 +22,7 @@ class APIConfig {
     
     static var requestTimeOut: TimeInterval = 60
     static var tokenHeader       = ["Authorization": ""]
-    static var defaultNullValue  = "null"
+    static var defaultNullValue  = ""
     static var enviroment        = NetworkEnviroment.production
     
     static func getProductionBaseURLString(with domain: APIDomain = .main) -> String {

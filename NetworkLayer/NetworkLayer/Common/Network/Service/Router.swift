@@ -21,7 +21,7 @@ protocol NetworkRouter: class {
     
 }
 
-class Router<EndPoint: EndPointType, ResponseData: Decodable, ResponseError: Decodable>: NetworkRouter {
+class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
     private var task: URLSessionTask?
     private var session: URLSession
     
