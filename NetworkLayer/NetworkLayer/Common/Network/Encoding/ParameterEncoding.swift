@@ -17,14 +17,16 @@ public protocol ParameterEncoder {
 public enum ParameterEncoding {
     public static func encode(urlRequest: inout URLRequest,
                               bodyParameters: Parameters?,
-                              urlParameters: Parameters?) throws {
+                              urlParameters: Parameters?,
+                              urlParamsEncoder: ParameterEncoder.Type = URLParameterEncoder.self,
+                              JSONParamsEncoder: ParameterEncoder.Type = JSONParameterEncoder.self) throws {
         do {
             if let urlParameters = urlParameters {
-                try URLParameterEncoder.encode(urlRequest: &urlRequest, with: urlParameters)
+                try urlParamsEncoder.encode(urlRequest: &urlRequest, with: urlParameters)
             }
             
             if let bodyParameters = bodyParameters {
-                try JSONParameterEncoder.encode(urlRequest: &urlRequest, with: bodyParameters)
+                try JSONParamsEncoder.encode(urlRequest: &urlRequest, with: bodyParameters)
             }
         } catch {
             throw error

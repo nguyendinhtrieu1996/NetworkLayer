@@ -112,7 +112,6 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
         
         do {
             addAdditionalHeaders(endPoint.headers, request: &request)
-            
             try configureParameters(bodyParameters: endPoint.body,
                                     urlParameters: endPoint.urlParams,
                                     request: &request)

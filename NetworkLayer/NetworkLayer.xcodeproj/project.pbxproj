@@ -31,6 +31,10 @@
 		C5FC6ACC22018ED500BE0ED7 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FC6ACB22018ED500BE0ED7 /* Data+Extension.swift */; };
 		C5FC6AD02201A1E300BE0ED7 /* RouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FC6ACF2201A1E300BE0ED7 /* RouteTests.swift */; };
 		C5FC6AD22201A95900BE0ED7 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FC6AD12201A95900BE0ED7 /* URL+Extension.swift */; };
+		C5FDBC3E2202A2E100BF147B /* MockURLParametersEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC3D2202A2E100BF147B /* MockURLParametersEncoder.swift */; };
+		C5FDBC402202A37B00BF147B /* MockJSONParamtersEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC3F2202A37B00BF147B /* MockJSONParamtersEncoder.swift */; };
+		C5FDBC422202B17200BF147B /* MockEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC412202B17200BF147B /* MockEndPoint.swift */; };
+		C5FDBC442202B2CF00BF147B /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDBC432202B2CF00BF147B /* RouterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +85,10 @@
 		C5FC6ACB22018ED500BE0ED7 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		C5FC6ACF2201A1E300BE0ED7 /* RouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTests.swift; sourceTree = "<group>"; };
 		C5FC6AD12201A95900BE0ED7 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		C5FDBC3D2202A2E100BF147B /* MockURLParametersEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLParametersEncoder.swift; sourceTree = "<group>"; };
+		C5FDBC3F2202A37B00BF147B /* MockJSONParamtersEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJSONParamtersEncoder.swift; sourceTree = "<group>"; };
+		C5FDBC412202B17200BF147B /* MockEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEndPoint.swift; sourceTree = "<group>"; };
+		C5FDBC432202B2CF00BF147B /* RouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +150,7 @@
 		C50A3E3022003119008CFFB4 /* NetworkLayerTests */ = {
 			isa = PBXGroup;
 			children = (
-				C5B5AB322201633700B34309 /* Encoding */,
+				C5FDBC3B2202A11B00BF147B /* Netwoking */,
 				C50A3E3322003119008CFFB4 /* Info.plist */,
 			);
 			path = NetworkLayerTests;
@@ -262,6 +270,26 @@
 				C5FC6AD12201A95900BE0ED7 /* URL+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C5FDBC3B2202A11B00BF147B /* Netwoking */ = {
+			isa = PBXGroup;
+			children = (
+				C5FDBC3C2202A2C300BF147B /* Mock */,
+				C5B5AB322201633700B34309 /* Encoding */,
+				C5FDBC432202B2CF00BF147B /* RouterTests.swift */,
+			);
+			path = Netwoking;
+			sourceTree = "<group>";
+		};
+		C5FDBC3C2202A2C300BF147B /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				C5FDBC3D2202A2E100BF147B /* MockURLParametersEncoder.swift */,
+				C5FDBC3F2202A37B00BF147B /* MockJSONParamtersEncoder.swift */,
+				C5FDBC412202B17200BF147B /* MockEndPoint.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,10 +446,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5FDBC442202B2CF00BF147B /* RouterTests.swift in Sources */,
+				C5FDBC402202A37B00BF147B /* MockJSONParamtersEncoder.swift in Sources */,
 				C5B5AB2F2201629100B34309 /* ParamterEncodingTest.swift in Sources */,
 				C5FC6AD02201A1E300BE0ED7 /* RouteTests.swift in Sources */,
 				C5FC6AC72201871400BE0ED7 /* JSONParameterEncoderTests.swift in Sources */,
 				C5B5AB312201632F00B34309 /* URLParameterEncodingTests.swift in Sources */,
+				C5FDBC422202B17200BF147B /* MockEndPoint.swift in Sources */,
+				C5FDBC3E2202A2E100BF147B /* MockURLParametersEncoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

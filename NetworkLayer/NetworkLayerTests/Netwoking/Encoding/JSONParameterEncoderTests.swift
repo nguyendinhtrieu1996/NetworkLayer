@@ -23,19 +23,24 @@ class JSONParameterEncoderTests: XCTestCase {
     
     func testEncodeWithEmptyParams() {
         try! JSONParameterEncoder.encode(urlRequest: &urlRequest, with: emptyBodyParams)
-        let data = urlRequest.httpBody
+        let httpBodyData = urlRequest.httpBody
         let expectData = try! JSONSerialization.data(withJSONObject: emptyBodyParams, options: .prettyPrinted)
-        XCTAssertEqual(data, expectData)
+        XCTAssertEqual(httpBodyData, expectData)
     }
     
     func testEncodeWithValidParams() {
         try! JSONParameterEncoder.encode(urlRequest: &urlRequest, with: validBodyParams)
         let httpBodyData = urlRequest.httpBody
-        guard let bodyDict = httpBodyData?.toDictionary() else {
-            XCTFail("Get dictonary Fail")
-            return
-        }
-        XCTAssertTrue(NSDictionary(dictionary: bodyDict as [AnyHashable : Any]).isEqual(to: validBodyParams as [AnyHashable : Any]))
+        let expectData = try! JSONSerialization.data(withJSONObject: validBodyParams, options: .prettyPrinted)
+        XCTAssertEqual(httpBodyData, expectData)
+    }
+    
+    func testEncodeWithParamsFail() {
+        let params = ["~~": "~|"]
+        try! JSONParameterEncoder.encode(urlRequest: &urlRequest, with: params)
+        let httpBodyData = urlRequest.httpBody
+        let expectData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+        XCTAssertEqual(httpBodyData, expectData)
     }
     
     func testEncodeAddContentTypeHeaderField() {
