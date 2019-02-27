@@ -14,7 +14,7 @@ public protocol ParameterEncoder {
     static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws
 }
 
-public enum ParameterEncoding {
+public struct ParameterEncoding {
     public static func encode(urlRequest: inout URLRequest,
                               bodyParameters: Parameters?,
                               urlParameters: Parameters?,

@@ -21,18 +21,18 @@ class APIConfig {
     }
     
     static var requestTimeOut: TimeInterval = 60
-    static var tokenHeader       = ["Authorization": ""]
+    static var tokenHeader       = ["Authorization": "Bearer "]
     static var defaultNullValue  = ""
     static var enviroment        = NetworkEnviroment.production
     
     static func getProductionBaseURLString(with domain: APIDomain = .main) -> String {
         switch domain {
         case .main:
-            return "http://api.app.com/api"
+            return "http://api.app.com"
         case .checkout:
-            return "http://api.app.com/checkout_api"
+            return "http://api.checkout.com"
         case .chat:
-            return "http://api.app.com/chat_api"
+            return "http://api.chat.com"
         }
     }
     

@@ -35,14 +35,6 @@ class JSONParameterEncoderTests: XCTestCase {
         XCTAssertEqual(httpBodyData, expectData)
     }
     
-    func testEncodeWithParamsFail() {
-        let params = ["~~": "~|"]
-        try! JSONParameterEncoder.encode(urlRequest: &urlRequest, with: params)
-        let httpBodyData = urlRequest.httpBody
-        let expectData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-        XCTAssertEqual(httpBodyData, expectData)
-    }
-    
     func testEncodeAddContentTypeHeaderField() {
         try! JSONParameterEncoder.encode(urlRequest: &urlRequest, with: emptyBodyParams)
         let header = urlRequest.allHTTPHeaderFields

@@ -8,30 +8,26 @@
 
 import Foundation
 
-protocol NetworkRouter: class {
+protocol NetworkRouterProtocol: class {
     associatedtype ResponseData  : Decodable
-    associatedtype EndPoint: EndPointType
     associatedtype CompletionHanler = (APIResponse<ResponseData>) -> Void
     
-    func request(endPoint: EndPoint,
-                 onSuccess: CompletionHanler,
-                 onError: (()->Void)?)
-    
+    func request(endPoint: EndPointType, onSuccess: CompletionHanler, onError: (()->Void)?)
     func cancel()
-    
 }
 
-class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
+class NetworkRouter<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouterProtocol {
     private var task: URLSessionTask?
     private var session: URLSession
     
-    init(session: URLSession = URLSession.shared) {
+    init(session: URLSession = URLSession.shared, task: URLSessionDataTask? = nil) {
         self.session = session
+        self.task = task
     }
     
-    func request(endPoint: EndPoint, onSuccess: @escaping CompletionHanler, onError: (()->Void)?) {
+    func request(endPoint: EndPointType, onSuccess: @escaping CompletionHanler, onError: (()->Void)?) {
         do {
-            let request = try buildRequest(from: endPoint)
+            let request = try RequestBuilder.buildRequest(from: endPoint)
             NetworkLogger.log(request: request)
             
             task = session.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
@@ -41,8 +37,9 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
                     }
                     return
                 }
-                
-                strongSelf.mapData(data: data, response: response, onSuccess: onSuccess, onError: onError)
+                DispatchQueue.main.async {
+                    strongSelf.mapData(data: data, response: response, onSuccess: onSuccess, onError: onError)
+                }
             })
             
             task?.resume()
@@ -59,12 +56,11 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
     
     fileprivate func mapData(data: Data?,
                              response: URLResponse?,
-                             onSuccess: @escaping (APIResponse<ResponseData>) -> Void,
+                             onSuccess: @escaping CompletionHanler,
                              onError: (()->Void)?) {
+        
         guard let response = response as? HTTPURLResponse else {
-            DispatchQueue.main.async {
-                onError?()
-            }
+            onError?()
             return
         }
         NetworkLogger.log(data: data, response: response)
@@ -73,19 +69,13 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
         switch result {
         case .success:
             guard let apiResponse = parseJSON(data: data) else {
-                DispatchQueue.main.async {
-                    onError?()
-                }
+                onError?()
                 return
             }
-            DispatchQueue.main.async {
-                onSuccess(apiResponse)
-            }
+            onSuccess(apiResponse)
             break
         case .failure:
-            DispatchQueue.main.async {
-                onError?()
-            }
+            onError?()
             break
         }
     }
@@ -100,44 +90,6 @@ class Router<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRouter {
             return response
         } catch {
             return nil
-        }
-    }
-    
-    fileprivate func buildRequest(from endPoint: EndPoint) throws -> URLRequest {
-        var request = URLRequest(url: endPoint.baseURL.appendingPathComponent(endPoint.path),
-                                 cachePolicy: endPoint.cachePolicy,
-                                 timeoutInterval: APIConfig.requestTimeOut)
-        
-        request.httpMethod = endPoint.httpMethod.rawValue
-        
-        do {
-            addAdditionalHeaders(endPoint.headers, request: &request)
-            try configureParameters(bodyParameters: endPoint.body,
-                                    urlParameters: endPoint.urlParams,
-                                    request: &request)
-            
-            return request
-        } catch {
-            throw error
-        }
-    }
-    
-    fileprivate func addAdditionalHeaders(_ addtionalHeaders: HTTPHeaders?, request: inout URLRequest) {
-        guard let headers = addtionalHeaders else { return }
-        for (key, value) in headers {
-            request.setValue(value, forHTTPHeaderField: key)
-        }
-    }
-    
-    fileprivate func configureParameters(bodyParameters: Parameters?,
-                                         urlParameters: Parameters?,
-                                         request: inout URLRequest) throws {
-        do {
-            try ParameterEncoding.encode(urlRequest: &request,
-                                         bodyParameters: bodyParameters,
-                                         urlParameters: urlParameters)
-        } catch {
-            throw error
         }
     }
     

@@ -41,6 +41,11 @@ extension EndPointType {
     var cachePolicy: NSURLRequest.CachePolicy {
         return .useProtocolCachePolicy
     }
+    
+    var headers: HTTPHeaders? {
+        return APIConfig.tokenHeader
+    }
+    
 }
 
 
