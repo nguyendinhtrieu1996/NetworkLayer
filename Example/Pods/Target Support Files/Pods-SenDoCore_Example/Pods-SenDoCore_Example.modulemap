@@ -1,0 +1,6 @@
+framework module Pods_SenDoCore_Example {
+  umbrella header "Pods-SenDoCore_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

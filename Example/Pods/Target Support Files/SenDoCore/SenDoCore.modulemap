@@ -1,0 +1,6 @@
+framework module SenDoCore {
+  umbrella header "SenDoCore-umbrella.h"
+
+  export *
+  module * { export * }
+}

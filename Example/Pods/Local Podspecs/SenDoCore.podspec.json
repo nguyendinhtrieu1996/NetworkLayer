@@ -1,0 +1,22 @@
+{
+  "name": "SenDoCore",
+  "version": "0.1.0",
+  "summary": "A short description of SenDoCore.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/nguyendinhtrieu1996@gmail.com/SenDoCore",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "nguyendinhtrieu1996@gmail.com": "trieund@sendo.vn"
+  },
+  "source": {
+    "git": "https://github.com/nguyendinhtrieu1996@gmail.com/SenDoCore.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SenDoCore/Classes/**/*"
+}
