@@ -27,7 +27,7 @@ class ParamterEncodingTest: XCTestCase {
     
     func testEncodeWithEmptyURLThrowException() {
         urlRequest.url = nil
-        XCTAssertThrowsError(try ParameterEncoding.encode(urlRequest: &urlRequest,
+        XCTAssertThrowsError(try URLEncoding.encode(urlRequest: &urlRequest,
                                                           bodyParameters: emptyBodyParams,
                                                           urlParameters: emptyURLParams))
         { error in
@@ -36,7 +36,7 @@ class ParamterEncodingTest: XCTestCase {
     }
     
     func testEncodeWithUrlParamsWasCalled() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest,
+        try! URLEncoding.encode(urlRequest: &urlRequest,
                                       bodyParameters: nil,
                                       urlParameters: emptyURLParams,
                                       urlParamsEncoder: MockURLParametersEncoder.self,
@@ -47,7 +47,7 @@ class ParamterEncodingTest: XCTestCase {
     }
     
     func testEncodeWithBodyParamsWasCalled() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest,
+        try! URLEncoding.encode(urlRequest: &urlRequest,
                                       bodyParameters: emptyBodyParams,
                                       urlParameters: nil,
                                       urlParamsEncoder: MockURLParametersEncoder.self,
@@ -58,7 +58,7 @@ class ParamterEncodingTest: XCTestCase {
     }
     
     func testEncodeWithURLAndBodyParamsWasCalled() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest,
+        try! URLEncoding.encode(urlRequest: &urlRequest,
                                       bodyParameters: emptyBodyParams,
                                       urlParameters: emptyURLParams,
                                       urlParamsEncoder: MockURLParametersEncoder.self,
@@ -69,20 +69,20 @@ class ParamterEncodingTest: XCTestCase {
     }
     
     func testEncodeWithURLParamsAndNilBodyConfigCorrect() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest, bodyParameters: nil, urlParameters: urlParams)
+        try! URLEncoding.encode(urlRequest: &urlRequest, bodyParameters: nil, urlParameters: urlParams)
         let expectURL = URL.buildURL(with: validURL, urlParameters: urlParams)
         XCTAssertEqual(urlRequest.url, expectURL)
     }
     
     func testEncodeWithBodyAndNilURLParamsConfigCorrect() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest, bodyParameters: bodyParams, urlParameters: nil)
+        try! URLEncoding.encode(urlRequest: &urlRequest, bodyParameters: bodyParams, urlParameters: nil)
         let bodyData = urlRequest.httpBody
         let expectBodyData = try! JSONSerialization.data(withJSONObject: bodyParams, options: .prettyPrinted)
         XCTAssertEqual(bodyData, expectBodyData)
     }
     
     func testEncodeWithURLParamsAndBodyParamsConfigCorrect() {
-        try! ParameterEncoding.encode(urlRequest: &urlRequest, bodyParameters: bodyParams, urlParameters: urlParams)
+        try! URLEncoding.encode(urlRequest: &urlRequest, bodyParameters: bodyParams, urlParameters: urlParams)
         let expectURL = URL.buildURL(with: validURL, urlParameters: urlParams)
         XCTAssertEqual(urlRequest.url, expectURL)
         

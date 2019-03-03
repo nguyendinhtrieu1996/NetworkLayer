@@ -9,7 +9,7 @@
 import Foundation
 @testable import NetworkLayer
 
-class MockJSONParamtersEncoder: ParameterEncoder {
+class MockJSONParamtersEncoder: ParameterEncoding {
     static var wasCallEncode = false
     
     static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {

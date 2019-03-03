@@ -8,18 +8,25 @@
 
 import UIKit
 
+public enum HTTPMethod: String {
+    case get    = "GET"
+    case post   = "POST"
+    case put    = "PUT"
+    case delete = "DELETE"
+}
+
 public typealias Parameters = [String: Any?]
 
-public protocol ParameterEncoder {
+public protocol ParameterEncoding {
     static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws
 }
 
-public struct ParameterEncoding {
+public struct URLEncoding {
     public static func encode(urlRequest: inout URLRequest,
                               bodyParameters: Parameters?,
                               urlParameters: Parameters?,
-                              urlParamsEncoder: ParameterEncoder.Type = URLParameterEncoder.self,
-                              JSONParamsEncoder: ParameterEncoder.Type = JSONParameterEncoder.self) throws {
+                              urlParamsEncoder: ParameterEncoding.Type = URLParameterEncoder.self,
+                              JSONParamsEncoder: ParameterEncoding.Type = JSONParameterEncoder.self) throws {
         do {
             if let urlParameters = urlParameters {
                 try urlParamsEncoder.encode(urlRequest: &urlRequest, with: urlParameters)
@@ -34,9 +41,11 @@ public struct ParameterEncoding {
     }
 }
 
-public enum NetworkError: String, Error {
-    case parametersNil  = "Parameters were nil."
-    case encodingFailed = "Parameters encoding failed"
-    case missingURL     = "URL is nil"
+public enum NetworkError: Error {
+    case missingURL
+    case invalidURL(url: URLConvertiable)
+    case parametersNil
+    case encodingFailed
+    
 }
 

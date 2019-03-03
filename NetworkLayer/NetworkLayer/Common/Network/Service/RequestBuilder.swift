@@ -38,7 +38,7 @@ class RequestBuilder {
                                    urlParameters: Parameters?,
                                    request: inout URLRequest) throws {
         do {
-            try ParameterEncoding.encode(urlRequest: &request,
+            try URLEncoding.encode(urlRequest: &request,
                                          bodyParameters: bodyParameters,
                                          urlParameters: urlParameters)
         } catch {
