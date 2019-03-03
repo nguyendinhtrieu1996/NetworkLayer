@@ -1,5 +1,5 @@
 //
-//  NSNumber+Extension.swift
+//  UIView+Extension.swift
 //  NetworkLayer
 //
 //  Created by MACOS on 3/3/19.
@@ -7,7 +7,3 @@
 //
 
 import Foundation
-
-extension NSNumber {
-    var isBool: Bool { return CFBooleanGetTypeID() == CFGetTypeID(self) }
-}

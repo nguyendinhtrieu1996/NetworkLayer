@@ -3,7 +3,7 @@
 //  GlobeDr
 //
 //  Created by MACOS on 9/28/18.
-//  Copyright © 2018 GlobeDr. All rights reserved.
+//  Copyright © 2018 MACOS. All rights reserved.
 //
 
 import Foundation

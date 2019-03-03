@@ -2,8 +2,8 @@
 //  EndPointType.swift
 //  NetworkLayer
 //
-//  Created by dinhtrieu on 2018. 09. 10..
-//  Copyright © 2018. dinhtrieu. All rights reserved.
+//  Created by MACOS on 10/9/18
+//  Copyright © 2018 MACOS. All rights reserved.
 //
 
 import UIKit

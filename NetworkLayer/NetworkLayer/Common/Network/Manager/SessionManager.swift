@@ -30,13 +30,37 @@ open class SessionManager {
     }
     
     // MARK: Data Request
+    
     open func request(
         _ url: URLConvertiable,
         method: HTTPMethod = .get,
         parameters: Parameters? = nil,
-        encoding: URLEncoding,
-        header: HTTPHeaders? = nil) {
+        encoding: ParameterEncoding = URLEncoding.default,
+        headers: HTTPHeaders? = nil) {
+        var originalRequest: URLRequest
         
+        do {
+            originalRequest = try URLRequest(url: url, method: method, headers: headers)
+            let encodedURLRequest = try encoding.encode(originalRequest, with: parameters)
+            request(encodedURLRequest)
+        } catch {
+        
+        }
+    }
+    
+    private func request(_ urlRequest: URLRequestConvertable) {
+        var originalRequest: URLRequest?
+        
+        do {
+            originalRequest = try urlRequest.asURLRequest()
+            let originalTask = DataRequest.Requestable(urlRequest: originalRequest!)
+            let task = originalTask.task(session: session, queue: queue)
+            let request = DataRequest(session: session, task: task)
+            
+            request.resume()
+        } catch {
+            
+        }
     }
     
 }

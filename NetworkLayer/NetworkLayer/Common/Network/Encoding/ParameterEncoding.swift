@@ -2,8 +2,8 @@
 //  ParameterEncoding.swift
 //  NetworkLayer
 //
-//  Created by dinhtrieu on 2018. 09. 10..
-//  Copyright © 2018. dinhtrieu. All rights reserved.
+//  Created by MACOS on 10/9/18
+//  Copyright © 2018 MACOS. All rights reserved.
 //
 
 import UIKit
@@ -30,12 +30,13 @@ public enum HTTPMethod: String {
 public typealias Parameters = [String: Any]
 
 public protocol ParameterEncoding {
-    static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws
+    func encode(_ urlRequest: URLRequestConvertable, with parameters: Parameters?) throws -> URLRequest
 }
 
 // MARK: -
 
-public struct URLEncoding {
+public struct URLEncoding: ParameterEncoding {
+    
     // MARK: Helper Types
     
     public enum Destination {
@@ -116,7 +117,29 @@ public struct URLEncoding {
     }
     
     public func queryComponents(fromKey key: String, value: Any) -> [(String, String)] {
-        return []
+        var components: [(String, String)] = []
+        
+        if let dictionary = value as? [String: Any] {
+            for (nestedKey, value) in dictionary {
+                components += queryComponents(fromKey: "\(key)[\(nestedKey)]", value: value)
+            }
+        } else if let array = value as? [Any] {
+            for value in array {
+                components += queryComponents(fromKey: arrayEncoding.encode(key: key), value: value)
+            }
+        } else if let value = value as? NSNumber {
+            if value.isBool {
+                components.append((escape(key), escape(boolEncoding.encode(value: value.boolValue))))
+            } else {
+                components.append((escape(key), escape("\(value)")))
+            }
+        } else if let bool = value as? Bool {
+            components.append((escape(key), escape(boolEncoding.encode(value: bool))))
+        } else {
+            components.append((escape(key), escape("\(value)")))
+        }
+        
+        return components
     }
     
     public func escape(_ string: String) -> String {

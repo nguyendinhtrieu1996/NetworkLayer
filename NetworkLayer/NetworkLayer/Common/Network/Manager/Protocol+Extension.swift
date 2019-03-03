@@ -50,6 +50,12 @@ extension URLRequestConvertable {
     }
 }
 
+extension URLRequest: URLRequestConvertable {
+    public func asURLRequest() throws -> URLRequest {
+        return self
+    }
+}
+
 // MARK: -
 
 extension URLRequest {
