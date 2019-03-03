@@ -29,6 +29,7 @@
 		C53AE939222BFA96001C57DF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53AE938222BFA96001C57DF /* UIView+Extension.swift */; };
 		C53AE93B222BFAB8001C57DF /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53AE93A222BFAB8001C57DF /* Request.swift */; };
 		C5B5CA022225561E00858F85 /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5CA012225561E00858F85 /* URLRequest+Extension.swift */; };
+		C5D3E729222C2B4A005AEDE2 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D3E728222C2B4A005AEDE2 /* TaskDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		C53AE938222BFA96001C57DF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C53AE93A222BFAB8001C57DF /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C5B5CA012225561E00858F85 /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
+		C5D3E728222C2B4A005AEDE2 /* TaskDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,7 +187,6 @@
 				C50A3E802200326B008CFFB4 /* APIConfig.swift */,
 				C535697C222BCC2A009970D4 /* Protocol+Extension.swift */,
 				C5356978222BC891009970D4 /* SessionManager.swift */,
-				C535697A222BCA14009970D4 /* SessionDelegate.swift */,
 				C53AE93A222BFAB8001C57DF /* Request.swift */,
 			);
 			path = Manager;
@@ -205,9 +206,10 @@
 			children = (
 				C53AE93D222BFBD4001C57DF /* Response */,
 				C50A3E7E22003262008CFFB4 /* Service */,
+				C5D3E727222C2B2A005AEDE2 /* Delegate */,
 				C50A3E7722003252008CFFB4 /* Manager */,
-				C50A3E6C22003241008CFFB4 /* EndPoint */,
 				C50A3E65220031C1008CFFB4 /* Encoding */,
+				C50A3E6C22003241008CFFB4 /* EndPoint */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -263,6 +265,15 @@
 				C50A3E782200325C008CFFB4 /* NetworkResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		C5D3E727222C2B2A005AEDE2 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				C535697A222BCA14009970D4 /* SessionDelegate.swift */,
+				C5D3E728222C2B4A005AEDE2 /* TaskDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		C5FC6AC822018DA500BE0ED7 /* Extension */ = {
@@ -407,6 +418,7 @@
 			files = (
 				C50A3E1F22003118008CFFB4 /* ViewController.swift in Sources */,
 				C50A3E1D22003118008CFFB4 /* AppDelegate.swift in Sources */,
+				C5D3E729222C2B4A005AEDE2 /* TaskDelegate.swift in Sources */,
 				C535697B222BCA14009970D4 /* SessionDelegate.swift in Sources */,
 				C5356979222BC891009970D4 /* SessionManager.swift in Sources */,
 				C50A3E8C22003EB8008CFFB4 /* AppConfig.swift in Sources */,

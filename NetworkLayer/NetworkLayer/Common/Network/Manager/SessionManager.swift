@@ -31,36 +31,44 @@ open class SessionManager {
     
     // MARK: Data Request
     
+    @discardableResult
     open func request(
         _ url: URLConvertiable,
         method: HTTPMethod = .get,
         parameters: Parameters? = nil,
         encoding: ParameterEncoding = URLEncoding.default,
-        headers: HTTPHeaders? = nil) {
+        headers: HTTPHeaders? = nil)
+        -> DataRequest {
         var originalRequest: URLRequest
         
         do {
             originalRequest = try URLRequest(url: url, method: method, headers: headers)
             let encodedURLRequest = try encoding.encode(originalRequest, with: parameters)
-            request(encodedURLRequest)
+            return request(encodedURLRequest)
         } catch {
-        
+            return DataRequest()
         }
     }
     
-    private func request(_ urlRequest: URLRequestConvertable) {
+    @discardableResult
+    private func request(_ urlRequest: URLRequestConvertable) -> DataRequest {
         var originalRequest: URLRequest?
         
         do {
             originalRequest = try urlRequest.asURLRequest()
             let originalTask = DataRequest.Requestable(urlRequest: originalRequest!)
             let task = originalTask.task(session: session, queue: queue)
-            let request = DataRequest(session: session, task: task)
+            let request = DataRequest(session: session, task: task, originalTask: originalTask)
             
             request.resume()
+            return request
         } catch {
-            
+            return DataRequest()
         }
+    }
+    
+    private func request(_ urlRequest: URLRequest, failedWith error: Error) {
+        
     }
     
 }

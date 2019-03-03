@@ -16,8 +16,7 @@ protocol EndPointType {
     var path:               String                   { get }
     var httpMethod:         HTTPMethod               { get }
     var headers:            HTTPHeaders?             { get }
-    var body:               Parameters?              { get }
-    var urlParams:          Parameters?              { get }
+    var parameters:         Parameters?              { get }
     var cachePolicy:        NSURLRequest.CachePolicy { get }
 }
 

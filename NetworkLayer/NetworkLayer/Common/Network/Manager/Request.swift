@@ -15,16 +15,42 @@ public class Request {
     
     // MARK: Properties
     
-    public let task: URLSessionTask?
-    public let session: URLSession?
-    public var request: URLRequest?
+    public var task: URLSessionTask?
+    public var session: URLSession?
+    
+    public var request: URLRequest? {
+        return task?.originalRequest
+    }
+    
     public var response: HTTPURLResponse?
+    public var originalTask: TaskConvertible?
+    private var taskDelegate: TaskDelegate
+    private var taskDelegateLock = NSLock()
+    
+    open internal(set) var delegate: TaskDelegate {
+        get {
+            taskDelegateLock.lock()
+            defer { taskDelegateLock.unlock() }
+            return taskDelegate
+        }
+        set {
+            taskDelegateLock.lock()
+            defer { taskDelegateLock.unlock() }
+            taskDelegate = newValue
+        }
+    }
     
     // MARK: Lifecycle
     
-    init(session: URLSession, task: URLSessionTask) {
+    init() {
+        taskDelegate = TaskDelegate(task: URLSessionTask.init())
+    }
+    
+    init(session: URLSession, task: URLSessionTask, originalTask: TaskConvertible) {
         self.session = session
         self.task = task
+        self.originalTask = originalTask
+        taskDelegate = DataTaskDelegate(task: task)
     }
     
     public func resume() {
@@ -35,7 +61,7 @@ public class Request {
 
 // MARK: -
 
-protocol TaskConvertibale {
+public protocol TaskConvertible {
     func task(session: URLSession, queue: DispatchQueue) -> URLSessionTask
 }
 
@@ -44,10 +70,10 @@ protocol TaskConvertibale {
 public class DataRequest: Request {
     // MARK: Helper Types
     
-    public struct Requestable: TaskConvertibale {
+    public struct Requestable: TaskConvertible {
         var urlRequest: URLRequest
         
-        func task(session: URLSession, queue: DispatchQueue) -> URLSessionTask {
+        public func task(session: URLSession, queue: DispatchQueue) -> URLSessionTask {
             return queue.sync {
                 session.dataTask(with: urlRequest)
             }
@@ -55,5 +81,13 @@ public class DataRequest: Request {
     }
     
     // MARK: Properties
-    var progress: Progress?
+    
+    var dataDelegate: DataTaskDelegate? {
+        return delegate as? DataTaskDelegate
+    }
+    
+    var progress: Progress? {
+        return dataDelegate?.progress
+    }
+    
 }
