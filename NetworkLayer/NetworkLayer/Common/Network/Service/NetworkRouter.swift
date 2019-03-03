@@ -26,28 +26,7 @@ class NetworkRouter<EndPoint: EndPointType, ResponseData: Decodable>: NetworkRou
     }
     
     func request(endPoint: EndPointType, onSuccess: @escaping CompletionHanler, onError: (()->Void)?) {
-        do {
-            let request = try RequestBuilder.buildRequest(from: endPoint)
-            NetworkLogger.log(request: request)
-            
-            task = session.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
-                guard let strongSelf = self, error == nil else {
-                    DispatchQueue.main.async {
-                        onError?()
-                    }
-                    return
-                }
-                DispatchQueue.main.async {
-                    strongSelf.mapData(data: data, response: response, onSuccess: onSuccess, onError: onError)
-                }
-            })
-            
-            task?.resume()
-        } catch {
-            DispatchQueue.main.async {
-                onError?()
-            }
-        }
+        
     }
     
     public func cancel() {

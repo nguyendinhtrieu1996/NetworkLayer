@@ -178,22 +178,5 @@ public struct URLEncoding {
             return false
         }
     }
-    
-    public static func encode(urlRequest: inout URLRequest,
-                              bodyParameters: Parameters?,
-                              urlParameters: Parameters?,
-                              urlParamsEncoder: ParameterEncoding.Type = URLParameterEncoder.self,
-                              JSONParamsEncoder: ParameterEncoding.Type = JSONParameterEncoder.self) throws {
-        do {
-            if let urlParameters = urlParameters {
-                try urlParamsEncoder.encode(urlRequest: &urlRequest, with: urlParameters)
-            }
-            
-            if let bodyParameters = bodyParameters {
-                try JSONParamsEncoder.encode(urlRequest: &urlRequest, with: bodyParameters)
-            }
-        } catch {
-            throw error
-        }
-    }
+
 }

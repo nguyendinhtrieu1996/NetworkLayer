@@ -9,7 +9,7 @@
 import Foundation
 
 open class SessionManager {
-    // mARK: Properties
+    // MARK: Properties
     
     public static var `default`: SessionManager = {
         let configuration = URLSessionConfiguration.default
@@ -19,7 +19,7 @@ open class SessionManager {
     public let session: URLSession
     let queue = DispatchQueue(label: "\(AppConfig.bundleID)\(UUID().uuidString)")
     
-    // MARK: - Lifecycle
+    // MARK: Lifecycle
     
     private init(confiuration: URLSessionConfiguration = URLSessionConfiguration.default) {
         session = URLSession(configuration: confiuration, delegate: nil, delegateQueue: nil)
