@@ -18,11 +18,14 @@ open class SessionManager {
     
     public let session: URLSession
     let queue = DispatchQueue(label: "\(AppConfig.bundleID)\(UUID().uuidString)")
+    let delegate: SessionDelegate
     
     // MARK: Lifecycle
     
-    private init(confiuration: URLSessionConfiguration = URLSessionConfiguration.default) {
-        session = URLSession(configuration: confiuration, delegate: nil, delegateQueue: nil)
+    private init(confiuration: URLSessionConfiguration = URLSessionConfiguration.default,
+                 delegate: SessionDelegate = SessionDelegate()) {
+        self.delegate = delegate
+        session = URLSession(configuration: confiuration, delegate: delegate, delegateQueue: nil)
     }
     
     deinit {
@@ -59,6 +62,8 @@ open class SessionManager {
             let originalTask = DataRequest.Requestable(urlRequest: originalRequest!)
             let task = originalTask.task(session: session, queue: queue)
             let request = DataRequest(session: session, task: task, originalTask: originalTask)
+            
+            delegate[task] = request
             
             request.resume()
             return request

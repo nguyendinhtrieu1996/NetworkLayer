@@ -13,6 +13,10 @@ public class Request {
     
     public typealias ProgressHandler = (Progress) -> Void
     
+    enum RequestTask {
+        case data(TaskConvertible?, URLSessionTask)
+    }
+    
     // MARK: Properties
     
     public var task: URLSessionTask?
@@ -46,10 +50,16 @@ public class Request {
         taskDelegate = TaskDelegate(task: URLSessionTask.init())
     }
     
-    init(session: URLSession, task: URLSessionTask, originalTask: TaskConvertible) {
+    init(session: URLSession, requestTask: RequestTask) {
         self.session = session
-        self.task = task
-        self.originalTask = originalTask
+        
+//        switch <#value#> {
+//        case <#pattern#>:
+//            <#code#>
+//        default:
+//            <#code#>
+//        }
+        
         taskDelegate = DataTaskDelegate(task: task)
     }
     
